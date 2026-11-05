@@ -77,7 +77,9 @@ public final class YesSteveModelNeoForgeClient {
     private static void registerPictureInPictureRenderers(IEventBus modBus) {
         modBus.addListener(RegisterPictureInPictureRenderersEvent.class,
                 event -> event.register(YsmPreviewRenderState.class,
-                        () -> new YsmPreviewRenderer(
+                        // 26.1.2 的工厂类型是 Function<BufferSource, PictureInPictureRenderer<T>>
+                        // （26.3 改成了 Supplier），BufferSource 由 NeoForge 池传入。
+                        bufferSource -> new YsmPreviewRenderer(bufferSource,
                                 net.minecraft.client.Minecraft.getInstance().getEntityRenderDispatcher())));
     }
 

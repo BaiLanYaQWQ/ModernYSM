@@ -29,7 +29,7 @@ public final class YsmPreviewRendererPool {
     /** 26.1.2 的 PictureInPictureRenderer 在构造期接收 BufferSource，所有预览实例共享一个。 */
     private static MultiBufferSource.BufferSource sharedBufferSource;
 
-    private static MultiBufferSource.BufferSource sharedBufferSource() {
+    public static MultiBufferSource.BufferSource sharedBufferSource() {
         if (sharedBufferSource == null) {
             sharedBufferSource = MultiBufferSource.immediate(new ByteBufferBuilder(1536));
         }
