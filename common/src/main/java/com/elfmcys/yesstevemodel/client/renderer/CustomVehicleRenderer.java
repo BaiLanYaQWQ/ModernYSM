@@ -49,9 +49,9 @@ public class CustomVehicleRenderer {
                 return;
             }
             float bodyRotation = getBodyRotation(vehicle, Mth.lerp(partialTick, vehicle.yRotO, vehicle.getYRot()), partialTick);
-            poseStack.rotate(Axis.YP.rotationDegrees(180.0f - bodyRotation));
+            poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - bodyRotation));
             RenderUtils.prepMatrixForLocator(poseStack, list);
-            poseStack.rotate(Axis.YN.rotationDegrees(180.0f - bodyRotation));
+            poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - bodyRotation));
             // 26.3 port: getPassengersRidingOffset/getMyRidingOffset 已删除，
             // 乘客竖直偏移以 getPassengerRidingPosition(entity).y（相对载具的座椅高度）近似。
             double myRidingOffset = -vehicle.getPassengerRidingPosition(entity).y;

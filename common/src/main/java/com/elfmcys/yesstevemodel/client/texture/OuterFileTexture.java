@@ -6,12 +6,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.elfmcys.yesstevemodel.resource.YSMFolderDeserializer;
 import rip.ysm.imagestream.avif.AvifDecoder;
 import rip.ysm.imagestream.webp.WebpDecoder;
-import com.mojang.renderpearl.api.GpuFormat;
+import com.mojang.blaze3d.GpuFormat;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceMaps;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
-import com.mojang.renderpearl.api.textures.GpuTexture;
+import com.mojang.blaze3d.textures.GpuTexture;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +70,7 @@ public class OuterFileTexture extends AbstractTexture implements ITextureMap {
             String label = "OuterFileTexture";
             this.texture = device.createTexture(label, GpuTexture.USAGE_TEXTURE_BINDING | GpuTexture.USAGE_COPY_DST, GpuFormat.RGBA8_UNORM,
                     imageIn.getWidth(), imageIn.getHeight(), 1, 1);
-            this.sampler = RenderSystem.getSamplerCache().getRepeat(com.mojang.renderpearl.api.textures.FilterMode.NEAREST);
+            this.sampler = RenderSystem.getSamplerCache().getRepeat(com.mojang.blaze3d.textures.FilterMode.NEAREST);
             this.textureView = device.createTextureView(this.texture);
             device.createCommandEncoder().writeToTexture(this.texture, imageIn);
         } catch (Exception e) {

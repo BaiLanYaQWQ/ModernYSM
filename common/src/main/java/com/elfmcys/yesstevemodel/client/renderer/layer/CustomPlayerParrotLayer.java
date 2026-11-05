@@ -56,7 +56,7 @@ public class CustomPlayerParrotLayer extends GeoLayerRenderer<CustomPlayerEntity
             poseStack.pushPose();
             applyParrotTransform(poseStack, model, isLeftShoulder);
             poseStack.translate(0.0d, 1.5d, 0.0d);
-            poseStack.rotate(Axis.ZP.rotationDegrees(180.0f));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(180.0f));
             ParrotRenderState parrotState = new ParrotRenderState();
             parrotState.variant = variant;
             parrotState.pose = ParrotModel.Pose.ON_SHOULDER;

@@ -498,7 +498,7 @@ public class AnimationRouletteScreen extends Screen {
     }
 
     public boolean keyPressed(net.minecraft.client.input.KeyEvent event) {
-        if (KeyMappingFactory.isActiveAndMatches(AnimationRouletteKey.KEY_ROULETTE, event.key(), event.keycode())) {
+        if (KeyMappingFactory.isActiveAndMatches(AnimationRouletteKey.KEY_ROULETTE, event.key(), event.scancode())) {
             onClose();
             return true;
         }

@@ -74,7 +74,7 @@ public class CustomPlayerItemInHandLayer extends GeoLayerRenderer<CustomPlayerEn
             poseStack.pushPose();
             if (!applyItemBoneTransform(humanoidArm, poseStack, model)) {
                 poseStack.translate(0.0d, -0.0625d, -0.1d);
-                poseStack.rotate(Axis.XP.rotationDegrees(-90.0f));
+                poseStack.mulPose(Axis.XP.rotationDegrees(-90.0f));
                 if (SWarfareCompat.isGunItem(itemStack)) {
                     poseStack.translate(0.1d, 0.0d, 0.0d);
                     poseStack.scale(1.25f, 1.25f, 1.25f);
@@ -86,7 +86,7 @@ public class CustomPlayerItemInHandLayer extends GeoLayerRenderer<CustomPlayerEn
                 poseStack.pushPose();
                 if (!RenderUtils.prepMatrixForLocator(poseStack, list)) {
                     poseStack.translate(0.0d, -0.0625d, -0.1d);
-                    poseStack.rotate(Axis.XP.rotationDegrees(-90.0f));
+                    poseStack.mulPose(Axis.XP.rotationDegrees(-90.0f));
                     if (SWarfareCompat.isGunItem(itemStack)) {
                         poseStack.scale(1.25f, 1.25f, 1.25f);
                     }

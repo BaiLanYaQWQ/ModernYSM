@@ -57,8 +57,7 @@ public class RendererManager {
                 new net.minecraft.client.resources.model.EquipmentAssetManager(),
                 Minecraft.getInstance().getAtlasManager(),
                 Minecraft.getInstance().font,
-                Minecraft.getInstance().playerSkinRenderCache(),
-                Minecraft.getInstance().getPalettedTextureManager());
+                Minecraft.getInstance().playerSkinRenderCache());
         playerRenderer = new CustomPlayerRenderer(context);
         projectileRenderer = new ProjectileRenderer(context);
         handRenderer = new HandItemRenderer();

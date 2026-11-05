@@ -38,7 +38,7 @@ public class C2SSwingArmPacket {
             // LivingEntity#swing(hand, animation, sendToSwingingEntity) 内部 SwingState.startIfAble 就是
             // 旧的守卫（正在挥动且 tick 未过半时忽略），广播由它自己发 ClientboundSwingAnimationPacket；
             // 第三参 false = 只发给追踪者、不回发本人（本人已在客户端预测挥动），与 1.20.1 一致。
-            sender.swing(interactionHand, net.minecraft.world.item.component.SwingAnimation.DEFAULT, false);
+            sender.swing(interactionHand, false);
         }
     }
 }

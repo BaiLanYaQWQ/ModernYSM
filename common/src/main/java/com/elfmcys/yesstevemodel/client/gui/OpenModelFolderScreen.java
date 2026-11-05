@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Util;
 
 
 public class OpenModelFolderScreen extends Screen {
@@ -25,7 +26,7 @@ public class OpenModelFolderScreen extends Screen {
         int y = (this.height / 2) + 60;
         clearWidgets();
         addRenderableWidget(Button.builder(Component.translatable("gui.yes_steve_model.open_model_folder.open"), button -> {
-            Blaze3D.openPath(ServerModelManager.CUSTOM);
+            Util.getPlatform().openPath(ServerModelManager.CUSTOM);
         }).bounds(x, y, 150, 20).build());
         addRenderableWidget(Button.builder(Component.translatable("gui.yes_steve_model.model.return"), button2 -> {
             Minecraft.getInstance().setScreenAndShow(this.parentScreen);

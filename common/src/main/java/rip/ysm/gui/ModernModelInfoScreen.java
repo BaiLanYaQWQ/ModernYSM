@@ -25,6 +25,7 @@ import rip.ysm.gui.components.groups.InfoGroup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.util.Util;
 
 public class ModernModelInfoScreen extends OptionScreen {
 
@@ -141,8 +142,8 @@ public class ModernModelInfoScreen extends OptionScreen {
     public void openUrlWithConfirm(String url) {
         if (StringUtils.isBlank(url)) return;
         Minecraft.getInstance().setScreenAndShow(new ConfirmLinkScreen(confirmed -> {
-            if (confirmed) Blaze3D.openUri(URI.create(url));
+            if (confirmed) Util.getPlatform().openUri(URI.create(url));
             Minecraft.getInstance().setScreenAndShow(this);
-        }, URI.create(url), true));
+        }, url, true));
     }
 }

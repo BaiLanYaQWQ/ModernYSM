@@ -95,7 +95,7 @@ public class RenderFirstPlayerBackground {
         float walkPhase = avatarState.getBackwardsInterpolatedWalkDistance(partialTick);
         float fLerp = avatarState.getInterpolatedBob(partialTick);
         poseStack.translate((-Mth.sin(walkPhase * 3.1415927f)) * fLerp * 0.5f, Math.abs(Mth.cos(walkPhase * 3.1415927f) * fLerp), 0.0d);
-        poseStack.rotateDegrees(Axis.ZN, Mth.sin(walkPhase * 3.1415927f) * fLerp * 3.0f);
-        poseStack.rotateDegrees(Axis.XN, Math.abs(Mth.cos((walkPhase * 3.1415927f) - 0.2f) * fLerp) * 5.0f);
+        poseStack.mulPose(Axis.ZN.rotationDegrees(Mth.sin(walkPhase * 3.1415927f) * fLerp * 3.0f));
+        poseStack.mulPose(Axis.XN.rotationDegrees(Math.abs(Mth.cos((walkPhase * 3.1415927f) - 0.2f) * fLerp) * 5.0f));
     }
 }

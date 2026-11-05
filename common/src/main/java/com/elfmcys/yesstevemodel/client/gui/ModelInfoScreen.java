@@ -27,6 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import net.minecraft.util.Util;
 
 public class ModelInfoScreen extends Screen {
 
@@ -135,10 +136,10 @@ public class ModelInfoScreen extends Screen {
         if (str != null && StringUtils.isNoneBlank(str)) {
             Minecraft.getInstance().setScreenAndShow(new ConfirmLinkScreen(confirmed -> {
                 if (confirmed) {
-                    Blaze3D.openUri(URI.create(str));
+                    Util.getPlatform().openUri(URI.create(str));
                 }
                 Minecraft.getInstance().setScreenAndShow(this);
-            }, URI.create(str), true));
+            }, str, true));
         }
     }
 

@@ -42,7 +42,7 @@ public class CustomFishingHookRenderer {
         if (!ToolActionBridge.canFishingRodCast(player.getMainHandItem())) {
             hand = -hand;
         }
-        float swingProgress = player.getSwingAnimation(partialTick);
+        float swingProgress = player.getAttackAnim(partialTick);
         float swingProgressSqrt = Mth.sin(Mth.sqrt(swingProgress) * 3.1415927f);
         float yawOffset = Mth.lerp(partialTick, player.yBodyRotO, player.yBodyRot) * 0.017453292f;
         double dSin = Mth.sin(yawOffset);

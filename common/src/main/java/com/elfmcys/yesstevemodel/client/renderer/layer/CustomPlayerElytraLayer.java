@@ -57,7 +57,7 @@ public class CustomPlayerElytraLayer extends GeoLayerRenderer<CustomPlayerEntity
             poseStack.pushPose();
             renderElytra(poseStack, animatedGeoModel);
             poseStack.translate(0.0d, 1.5d, 0.0d);
-            poseStack.rotate(Axis.ZP.rotationDegrees(180.0f));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(180.0f));
             poseStack.scale(2.0f, 2.0f, 2.0f);
             this.elytraModel.setupAnim(renderState);
             this.elytraModel.renderToBuffer(poseStack, bufferSource.getBuffer(YsmRenderTypes.armorCutoutNoCull(cloakTextureLocation)), packedLightIn, 0, -1);

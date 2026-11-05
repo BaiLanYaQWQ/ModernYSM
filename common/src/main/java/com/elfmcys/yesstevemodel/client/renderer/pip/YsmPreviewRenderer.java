@@ -82,7 +82,7 @@ public class YsmPreviewRenderer extends PictureInPictureRenderer<YsmPreviewRende
             poseStack.pushPose();
             Vector3fc decorTranslation = decor.translation();
             poseStack.translate(decorTranslation.x(), decorTranslation.y(), decorTranslation.z());
-            poseStack.rotate(decor.rotation());
+            poseStack.mulPose(decor.rotation());
             this.renderDecor(decor, cameraRenderState, poseStack, submitNodeCollector);
             poseStack.popPose();
         }
@@ -94,7 +94,7 @@ public class YsmPreviewRenderer extends PictureInPictureRenderer<YsmPreviewRende
                 (renderState.y1() - renderState.y0()) * this.guiScale);
         try {
             poseStack.translate(translation.x(), translation.y(), translation.z());
-            poseStack.rotate(renderState.rotation());
+            poseStack.mulPose(renderState.rotation());
             this.entityRenderDispatcher.submit(renderState.renderState(), cameraRenderState,
                     0.0, 0.0, 0.0, poseStack, submitNodeCollector);
         } finally {
@@ -119,14 +119,14 @@ public class YsmPreviewRenderer extends PictureInPictureRenderer<YsmPreviewRende
         float yaw = decor.yawDeg();
         if (decor.bed() != null) {
             poseStack.pushPose();
-            poseStack.rotateDegrees(Axis.YP, yaw + 180.0f);
+            poseStack.mulPose(Axis.YP.rotationDegrees(yaw + 180.0f));
             poseStack.translate(-0.5f, 0.0f, 0.5f);
             submitBlock(poseStack, submitNodeCollector, decor.bed());
             poseStack.popPose();
         }
         if (decor.ground()) {
             poseStack.pushPose();
-            poseStack.rotateDegrees(Axis.YP, yaw);
+            poseStack.mulPose(Axis.YP.rotationDegrees(yaw));
             poseStack.translate(-1.5f, -1.0f, -2.5f);
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
@@ -144,7 +144,7 @@ public class YsmPreviewRenderer extends PictureInPictureRenderer<YsmPreviewRende
         if (decor.vehicle() != null) {
             EntityRenderState vehicleState = this.entityRenderDispatcher.extractEntity(decor.vehicle(), 0.0f);
             poseStack.pushPose();
-            poseStack.rotateDegrees(Axis.YP, yaw);
+            poseStack.mulPose(Axis.YP.rotationDegrees(yaw));
             this.entityRenderDispatcher.submit(vehicleState, cameraRenderState, 0.0, decor.vehicleY(), 0.0,
                     poseStack, submitNodeCollector);
             poseStack.popPose();

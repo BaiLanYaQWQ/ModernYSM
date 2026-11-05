@@ -123,7 +123,7 @@ public abstract class GeoReplacedEntityRenderer<TEntity extends LivingEntity, T 
                 VehicleCapability.get(t.getEntity().getVehicle()).ifPresent(cap -> {
                     Vector3f vector3f = cap.getExpressionOffset();
                     if (vector3f != null) {
-                        poseStack.rotate(new Quaternionf().rotateZYX(vector3f.z, 0.0f, vector3f.x).invert());
+                        poseStack.mulPose(new Quaternionf().rotateZYX(vector3f.z, 0.0f, vector3f.x).invert());
                     }
                 });
             }
@@ -214,7 +214,7 @@ public abstract class GeoReplacedEntityRenderer<TEntity extends LivingEntity, T 
             bodyRot += (float) (Math.cos(Mth.floor(ageInTicks) * 3.25f) * Math.PI * 0.4f);
         }
         if (tentity.getPose() != Pose.SLEEPING) {
-            poseStack.rotateDegrees(Axis.YP, bodyRot);
+            poseStack.mulPose(Axis.YP.rotationDegrees(bodyRot));
         }
         if (t > 0) {
             float fall = (t + partialTicks - 1.0f) / 20.0f * 1.6f;
@@ -222,14 +222,14 @@ public abstract class GeoReplacedEntityRenderer<TEntity extends LivingEntity, T 
             if (fall > 1.0f) {
                 fall = 1.0f;
             }
-            poseStack.rotateDegrees(Axis.ZP, fall * 90.0f);
+            poseStack.mulPose(Axis.ZP.rotationDegrees(fall * 90.0f));
         } else if (zIsAutoSpinAttack) {
-            poseStack.rotateDegrees(Axis.XP, -90.0f - tentity.getXRot(partialTicks));
-            poseStack.rotateDegrees(Axis.YP, ageInTicks * -75.0f);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-90.0f - tentity.getXRot(partialTicks)));
+            poseStack.mulPose(Axis.YP.rotationDegrees(ageInTicks * -75.0f));
         } else if (tentity.getPose() == Pose.SLEEPING) {
             Direction bedOrientation = tentity.getBedOrientation();
-            poseStack.rotateDegrees(Axis.YP, bedOrientation != null ? sleepDirectionToRotation(bedOrientation) : rotationYaw);
-            poseStack.rotateDegrees(Axis.ZP, 90.0f);
+            poseStack.mulPose(Axis.YP.rotationDegrees(bedOrientation != null ? sleepDirectionToRotation(bedOrientation) : rotationYaw));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(90.0f));
         }
         if (t > 0) {
             tentity.deathTime = t;

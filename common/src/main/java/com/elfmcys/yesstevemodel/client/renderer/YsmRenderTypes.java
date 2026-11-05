@@ -115,7 +115,7 @@ public final class YsmRenderTypes {
         return create("geo_translucent", YsmRenderPipelines.GEO_TRANSLUCENT, texture, true, false);
     }
 
-    private static RenderType create(String name, com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline,
+    private static RenderType create(String name, com.mojang.blaze3d.pipeline.RenderPipeline pipeline,
                                      Identifier texture, boolean sortOnUpload, boolean affectsOutline) {
         RenderSetup.RenderSetupBuilder builder = RenderSetup.builder(pipeline)
                 .withTexture("Sampler0", texture)

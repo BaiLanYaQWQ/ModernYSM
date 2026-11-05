@@ -67,7 +67,7 @@ public final class GeoBufferSource {
      * 实体顶点格式判定：六个语义齐备、且不含额外语义（UV3/LineWidth 等）。
      * 回放走 11 参批量 addVertex，语义与逐 setter 写入等价（见类注释的 javap 实证）。
      */
-    private static boolean isEntityVertexFormat(com.mojang.renderpearl.api.vertex.VertexFormat format) {
+    private static boolean isEntityVertexFormat(com.mojang.blaze3d.vertex.VertexFormat format) {
         return format.getElements().size() == 6
                 && format.contains(DefaultVertexFormat.POSITION_SEMANTIC_NAME)
                 && format.contains(DefaultVertexFormat.COLOR_SEMANTIC_NAME)
@@ -243,13 +243,8 @@ public final class GeoBufferSource {
         }
 
         @Override
-        public VertexConsumer setUv3(float u, float v) {
-            // 实体格式无 UV3；行为与 BufferBuilder 一致（beginElement 返回 -1，写入被忽略）
-            return this;
-        }
-
-        @Override
         public VertexConsumer setLineWidth(float width) {
+            // 实体格式无 LineWidth；行为与 BufferBuilder 一致（beginElement 返回 -1，写入被忽略）
             return this;
         }
     }
@@ -327,10 +322,6 @@ public final class GeoBufferSource {
                         target.setUv2((int) a[ai], (int) a[ai + 1]);
                         ai += 2;
                     }
-                    case OP_UV3 -> {
-                        target.setUv3(a[ai], a[ai + 1]);
-                        ai += 2;
-                    }
                     case OP_NORMAL -> {
                         target.setNormal(a[ai], a[ai + 1], a[ai + 2]);
                         ai += 3;
@@ -378,12 +369,6 @@ public final class GeoBufferSource {
         @Override
         public VertexConsumer setUv2(int u, int v) {
             this.op(OP_UV2, u, v);
-            return this;
-        }
-
-        @Override
-        public VertexConsumer setUv3(float u, float v) {
-            this.op(OP_UV3, u, v);
             return this;
         }
 

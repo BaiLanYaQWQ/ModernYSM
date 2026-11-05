@@ -38,7 +38,7 @@ public final class ExtraAnimationKey {
                 for (int i = 0; i <= 7; i++) {
                     // TODO port: 26.3 是 SDL 输入，InputConstants.UNKNOWN = scancode 0（旧版是 -1，会令 KeyMapping.setAll 的
                     // InputConstants.isKeyDown(-1) 越界崩溃），未绑定的额外动画键用 0 表示。
-                    KeyMapping eventMapping = KeyMappingFactory.createInGameNone(String.format("key.yes_steve_model.extra_animation.%d.desc", Integer.valueOf(i)), InputConstants.Type.KEYBOARD, 0, "key.category.yes_steve_model");
+                    KeyMapping eventMapping = KeyMappingFactory.createInGameNone(String.format("key.yes_steve_model.extra_animation.%d.desc", Integer.valueOf(i)), InputConstants.Type.KEYSYM, -1, "key.category.yes_steve_model");
                     KEY_MAPPINGS.add(eventMapping);
                 }
             }

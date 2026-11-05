@@ -24,6 +24,7 @@ import net.minecraft.util.FormattedCharSequence;
 import java.net.URI;
 
 import java.util.List;
+import net.minecraft.util.Util;
 
 public class AuthorButton extends Button {
 
@@ -154,10 +155,10 @@ public class AuthorButton extends Button {
         if (link.startsWith("http://") || link.startsWith("https://")) {
             Minecraft.getInstance().setScreenAndShow(new ConfirmLinkScreen(confirmed -> {
                 if (confirmed) {
-                    Blaze3D.openUri(URI.create(link));
+                    Util.getPlatform().openUri(URI.create(link));
                 }
                 Minecraft.getInstance().setScreenAndShow(this.parentScreen);
-            }, URI.create(link), true));
+            }, link, true));
             return;
         }
         Minecraft.getInstance().keyboardHandler.setClipboard(link);

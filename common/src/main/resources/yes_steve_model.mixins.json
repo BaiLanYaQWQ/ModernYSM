@@ -15,7 +15,8 @@
     "client.ThrowableItemProjectileAccessor",
     "client.KeyboardHandlerMixin", "client.MouseHandlerMixin",
     "client.EntityRenderDispatcherMixin", "client.EntityRendererInvoker", "client.WorldRendererMixin",
-    "client.FirstPersonHandsAndItemsRendererMixin",
+    "client.AvatarRendererHandMixin",
+    "client.ItemInHandRendererMixin",
     "client.ClientPacketListenerRespawnMixin",
     "client.RenderPipelinesInvoker", "client.RenderTypeAccessor"
   ],
