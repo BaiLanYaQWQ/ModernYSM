@@ -6,6 +6,7 @@
   <p>
     <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"/></a>
     <a href="../../actions/workflows/build.yml"><img src="../../actions/workflows/build.yml/badge.svg?branch=port%2F26.1.2" alt="Build"/></a>
+    <a href="../../releases"><img src="https://img.shields.io/github/v/release/BaiLanYaQWQ/ModernYSM?display_name=tag" alt="Release"/></a>
   </p>
 </div>
 
@@ -27,12 +28,14 @@ OpenYSM 是一款基于 [Yes Steve Model](https://modrinth.com/mod/yes-steve-mod
 
 ## 下载
 
-进入 [Actions](../../actions) 选一次成功的运行，在页面底部的 **Artifacts** 里下载：
+**推荐**：直接去 [Releases](../../releases) 下载打包好的 jar：
 
-- `openysm-fabric-port-26.x` — Fabric 版
-- `openysm-neoforge-port-26.x` — NeoForge 版
+- `openysm-<mod版本>-fabric-<MC版本>.jar` — Fabric 版
+- `openysm-<mod版本>-neoforge-<MC版本>.jar` — NeoForge 版
 
-也可以自己构建（见下）。
+每个 Release 对应一个 Minecraft 版本（`v2.6.6.6-26.3`、`v2.6.6.6-26.2`、`v2.6.6.6-26.1.2`）。
+
+也可以从 [Actions](../../actions) 的 Artifacts 里取每次提交的构建产物，或自己构建（见下）。
 
 ## 构建
 
