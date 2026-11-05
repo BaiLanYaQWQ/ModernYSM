@@ -22,4 +22,4 @@ rootProject.name = 'yes_steve_model'
 // 多加载器：每个加载器一个子工程，共享源码目录 common/ 与 compat-stubs/。
 include 'fabric'
 include 'neoforge'
-include 'forge'
+// 已移除 forge 模块：本仓库只保留 fabric + neoforge（ForgeGradle 7 与 Gradle 版本强耦合，维护成本高）
