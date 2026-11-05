@@ -44,6 +44,11 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      # artifact 名不允许 '/'，而分支名是 port/26.x —— 先把斜杠换成 '-'。
+      - name: Resolve artifact suffix
+        id: meta
+        run: echo "suffix=${GITHUB_REF_NAME//\//-}" >> "$GITHUB_OUTPUT"
+
       # 根工程没有编译任务；这里显式驱动两个加载器子工程。
       - name: Compile and package (fabric + neoforge)
         run: bash ./gradlew :fabric:build :neoforge:build --no-daemon --console=plain --stacktrace
@@ -52,7 +57,7 @@ jobs:
       - name: Upload fabric jar
         uses: actions/upload-artifact@v4
         with:
-          name: openysm-fabric-${{ github.ref_name }}
+          name: openysm-fabric-${{ steps.meta.outputs.suffix }}
           path: |
             fabric/build/libs/openysm-*.jar
             !**/*-sources.jar
@@ -61,7 +66,7 @@ jobs:
       - name: Upload neoforge jar
         uses: actions/upload-artifact@v4
         with:
-          name: openysm-neoforge-${{ github.ref_name }}
+          name: openysm-neoforge-${{ steps.meta.outputs.suffix }}
           path: |
             neoforge/build/libs/openysm-*.jar
             !**/*-sources.jar
