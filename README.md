@@ -1,54 +1,60 @@
-# Farewell thoughts
-
-YSM已经官方开源，我们的目标已经达成，所以是时候收场了。
-
-**说好了要进行一场别样的迭代大战，现在怎么跑路了？**
-
-**这确实是我们原本的想法，但是现在YSM官方开源了，我们应该让步**，对于我们对YSM的改进，例如UI改进，加载改进，内存优化，GPU渲染等我们相信官方开源的YSM也会逐步实现，所以，我们的目标达成了，我们跑路了！没必要留恋，抛下执念转向官方的生态，才是正确的。
-
-## 开源到底是不是"既定的"
-
-YSM最终转向开源是我们两个月以来施压的结果，一些TartaricAcid先生的孝子贤孙总是用"YSM其实早就想开源了，开源是既定的"这种愚蠢的借口否定我们的努力，我只想说我相信如果没有YSMParser/OpenYSM出现YSM几年内都不可能开源，如果开源是既定的，何必继续花几千元续费花费5000人民币购买的VMProtect。
-
-许多人在指点江山之前并不了解VMProtect的付费机制，首次购买后发放的版本本身即可永久使用，每年续费只是为获取更新服务，即便不续费，原有版本也不受影响。如果不追求更新，可一直正常使用。所以"因续费不起VMProtect而开源"的说法根本站不住脚。更何况近期更新内容几乎都与ARM/MacOS支持相关，[而作为一个官方能说出玩游戏就好好用windows的mod我相信他们根本不会在意MacOS用户](https://web.archive.org/web/20240730025323/https://github.com/TartaricAcid/ysm/issues/79)，根本无需为此续费。他们续费就是还想用最新的VMProtect继续保护这一套模型壳子。（无法防止倒卖，只能防止修改，然而倒卖的人根本没心情修改）
-
-YSM的团队看到开源版本蓬勃发展，各种改进与移植层出不穷时，他们意识到如果不做一个官方开源抢占生态迟早会被OpenYSM篡位，闭源版本那么几个人（可能高达一个甚至两个）开发不可能写的过开源社区，开源社区有的是人乐意去移植到他们从来没有关心过的版本，[支持他们从来不支持的操作系统](https://web.archive.org/web/20240730025323/https://github.com/TartaricAcid/ysm/issues/79)，看到自己的生态风雨飘摇了，才会决定开源。
-
-**我们研究他的加密，实现解密，反渲染，以及重新实现YSM新版本的所有功能，都是我们为了这个目标付出的努力，不能被开源是既定的否定，我们相信如果YSMParser/OpenYSM不出现，YSM几年之内都不能开源，这种破坏自己亲手建立起来的秩序的行为任何人都干不出来。**
-
-![vmp.png](images/vmp.png)
-
-当然无论如何，开源是一个Mod发展的正道，不说完成度怎么样，开源了就是好，TartaricAcid、番茄布丁等YSM开发者就此事最终做了一个正确的决定，致敬。
-
-# 原始README
-
 <div align="center">
   <img src="images/banner.png" alt="logo"/>
   <h2>OpenYSM</h2>
-  <p>YSM 开源替代品，基于LgeacyYSM</p>
+  <p>Yes Steve Model 的开源替代品 · 向下移植版</p>
 
   <p>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"/></a>
-    <a href="https://t.me/NoSteveModel"><img src="https://img.shields.io/badge/Telegram-@NoSteveModel-26A5E4?logo=telegram&logoColor=white" alt="Telegram"/></a>
+    <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"/></a>
+    <a href="../../actions/workflows/build.yml"><img src="../../actions/workflows/build.yml/badge.svg?branch=port%2F26.3" alt="Build"/></a>
   </p>
 </div>
 
 ## 说明
 
-OpenYSM 是一款基于 [Yes Steve Model](https://modrinth.com/mod/yes-steve-model) 的模组，它修改了原版玩家模型，其核心使用 [GeckoLib](https://github.com/bernie-g/geckolib) 库，并采用了 Minecraft 基岩版的模型和动画文件。这使得玩家可以根据自己的喜好自定义玩家模型和动画。
+OpenYSM 是一款基于 [Yes Steve Model](https://modrinth.com/mod/yes-steve-model) 的模组，它修改了原版玩家模型。核心使用 [GeckoLib](https://github.com/bernie-g/geckolib) 库，采用 Minecraft 基岩版的模型与动画文件，玩家可以自由更换自己的玩家模型和动画。
 
-本项目基于LgeacyYSM，目标是提供一个完全开源、可自由修改和分发的替代品。 
-本项目使用可选的C++库实现更快速的渲染，项目位于[OpenYSMDev/openysm.cpp](https://github.com/OpenYSMDev/openysm.cpp)
+本仓库在上游 `port/26.3` 的基础上做**向下移植**，把同一套功能回移到更早的 Minecraft 版本，并只保留 **Fabric + NeoForge** 两个加载器（forge 模块已移除）。
+
+## 支持的版本
+
+| 分支 | Minecraft | Fabric | NeoForge |
+| --- | --- | --- | --- |
+| `port/26.3`（默认） | 26.3 | ✅ | ✅ |
+| `port/26.2` | 26.2 | ✅ | ✅ |
+| `port/26.1.2` | 26.1.2 | ✅ | ✅ |
+
+三个分支都由 [GitHub Actions](../../actions) 自动构建，推送即触发，也可以在 Actions 页面手动运行。
+
+## 下载
+
+进入 [Actions](../../actions) 选一次成功的运行，在页面底部的 **Artifacts** 里下载：
+
+- `openysm-fabric-port-26.x` — Fabric 版
+- `openysm-neoforge-port-26.x` — NeoForge 版
+
+也可以自己构建（见下）。
 
 ## 构建
 
+需要 **JDK 25**（26.x 系列使用 Java 25）。仓库已包含 Gradle wrapper，无需单独安装 Gradle。
+
 ```bash
-git clone https://github.com/OpenYSMDev/ModernYSM.git
-cd ModernYSM
-./gradlew build
+./gradlew :fabric:build :neoforge:build
 ```
 
-构建产物位于 `build/<platform>/libs/` 目录下。
+产物：
+
+- `fabric/build/libs/openysm-*.jar`
+- `neoforge/build/libs/openysm-*.jar`
+
+> 注意：26.x 已是去混淆版本，不需要 mappings；`common/` 与 `compat-stubs/` 是共享源码目录，由两个加载器子工程通过 `srcDirs` 引入。
+
+## 移植
+
+26.3 → 26.2 → 26.1.2 并不是改个版本号：三代渲染栈各不相同（renderpearl / blaze3d / 旧版 RenderPipeline），
+输入域在 SDL 与 GLFW 之间来回换过，GUI 也经历了立即模式 → 提取式的重构。
+
+具体差异、踩过的坑和每个分支改动理由见 [docs/PORTING.md](docs/PORTING.md)。
 
 ## 贡献
 
@@ -60,7 +66,7 @@ cd ModernYSM
 
 本项目的源代码采用 MIT License 开放，您可以自由地使用、修改和分发代码，仅需要保留原始的版权声明。
 
-详细的许可证条款请参见 [LICENSE](LICENSE) 文件。
+详细的许可证条款请参见 [LICENSE.txt](LICENSE.txt) 文件。
 
 ### 模型资源协议
 
@@ -70,3 +76,9 @@ cd ModernYSM
 - 酒狐 (Wine Fox) 模型: 采用 CC BY-NC-SA 4.0 协议，允许非商业使用，需要署名，并且衍生作品需要采用相同协议
 
 请在使用相应模型时严格遵守对应的协议要求。
+
+## 致谢
+
+- 上游项目：[hongshaoluobotou/ModernYSM](https://github.com/hongshaoluobotou/ModernYSM)
+- 原始模组：[Yes Steve Model](https://modrinth.com/mod/yes-steve-model)
+- 动画/模型库：[GeckoLib](https://github.com/bernie-g/geckolib)
