@@ -84,10 +84,11 @@ jobs:
       - name: Stage release jars
         if: startsWith(github.ref, 'refs/tags/')
         run: |
+          MC=$(grep '^minecraft_version=' gradle.properties | cut -d= -f2)
           mkdir -p release
           for loader in fabric neoforge; do
             jar=$(ls $loader/build/libs/openysm-*.jar | grep -v -- '-sources' | head -1)
-            cp "$jar" "release/$(basename "$jar" .jar)-$loader.jar"
+            cp "$jar" "release/$(basename "$jar" .jar)-$loader-$MC.jar"
           done
           ls -l release
 
@@ -101,7 +102,7 @@ jobs:
           body: |
             自动构建产物（${{ github.ref_name }}）。
 
-            - `openysm-*-fabric.jar` — Fabric 版
-            - `openysm-*-neoforge.jar` — NeoForge 版
+            - `openysm-<mod版本>-fabric-<MC版本>.jar` — Fabric 版
+            - `openysm-<mod版本>-neoforge-<MC版本>.jar` — NeoForge 版
 
             需要 JDK 25 运行环境（Minecraft 26.x 系列）。
