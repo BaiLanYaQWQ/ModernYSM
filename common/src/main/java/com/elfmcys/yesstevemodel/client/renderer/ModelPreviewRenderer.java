@@ -22,11 +22,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.joml.Quaternionf;
@@ -328,14 +327,14 @@ public final class ModelPreviewRenderer {
         // 1.20.1 renderEntityPreview 的 yaw 参数（见上：bodyYawDeg = -yaw - 180）。
         float yawDeg = -bodyYawDeg - 180.0f;
         // 1.20.1 renderVehicleForAnimation：ride → 马、ride_pig → 猪、boat → 船
-        EntityType<?> vehicleType = animationTracker.isCurrentAnimation("ride") ? EntityTypes.HORSE
-                : animationTracker.isCurrentAnimation("ride_pig") ? EntityTypes.PIG
-                : animationTracker.isCurrentAnimation("boat") ? EntityTypes.OAK_BOAT
+        EntityType<?> vehicleType = animationTracker.isCurrentAnimation("ride") ? EntityType.HORSE
+                : animationTracker.isCurrentAnimation("ride_pig") ? EntityType.PIG
+                : animationTracker.isCurrentAnimation("boat") ? EntityType.OAK_BOAT
                 : null;
         Entity vehicle = createPreviewVehicle(vehicleType);
         float vehicleY = vehicle == null ? 0.0f : previewVehicleY(vehicle, previewEntity);
         YsmPreviewDecorSpec decor = new YsmPreviewDecorSpec(
-                poseOverride == Pose.SLEEPING ? Blocks.BED.pick(DyeColor.RED).defaultBlockState() : null,
+                poseOverride == Pose.SLEEPING ? Blocks.RED_BED.defaultBlockState() : null,
                 showGround, vehicle, vehicleY, yawDeg);
         Vector3f modelOffset = poseOverride == Pose.SLEEPING
                 ? new Vector3f(0.5f, 0.5625f, 0.0f)

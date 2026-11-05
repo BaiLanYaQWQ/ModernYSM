@@ -41,13 +41,13 @@ public final class AnimationRouletteKey {
                             String modelId = cap.getModelId();
                             ModelAssembly modelAssembly = cap.getModelAssembly();
                             if (modelAssembly != null && !modelAssembly.getModelData().getModelProperties().getExtraAnimation().isEmpty()) {
-                                if (Minecraft.getInstance().gui.screen() == null) {
+                                if (Minecraft.getInstance().screen == null) {
                                     if (GeneralConfig.effectiveModernRoulette()) {
                                         Minecraft.getInstance().setScreenAndShow(new ModernAnimationRouletteScreen(modelId, modelAssembly, cap));
                                     } else {
                                         Minecraft.getInstance().setScreenAndShow(new AnimationRouletteScreen(modelId, modelAssembly, cap));
                                     }
-                                } else if (Minecraft.getInstance().gui.screen() instanceof AnimationRouletteScreen || Minecraft.getInstance().gui.screen() instanceof ModernAnimationRouletteScreen) {
+                                } else if (Minecraft.getInstance().screen instanceof AnimationRouletteScreen || Minecraft.getInstance().screen instanceof ModernAnimationRouletteScreen) {
                                     Minecraft.getInstance().setScreenAndShow(null);
                                 }
                             }

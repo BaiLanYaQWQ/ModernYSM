@@ -24,12 +24,12 @@ public class KeyboardHandlerMixin {
         // 26.3（SDL）：KeyMapping.matches(KeyEvent) 比较的是 event.key()（scancode 域，与 KeyMapping.key 同域，
         // isKeyDown 也用该值索引键盘缓冲）；event.scancode() 是布局相关的 keycode，与 matches 不同域。
         // 桥接约定的 (keyCode, scanCode) 参数：(keyCode=event.key(), scanCode=event.scancode())。
-        Screen before = this.minecraft.gui.screen();
+        Screen before = this.minecraft.screen;
         ClientRawInputBridge.KEY_PRESSED.invoker().onKeyPressed(event.key(), event.scancode(), action, event.modifiers());
         // 若桥接监听器（如 PlayerModelToggleKey）在本次事件中打开了 Screen，则取消原版后续处理：
         // 原版 keyPress 在 HEAD 之后才读取 gui.screen()，会把同一个按键事件转发给新打开的 Screen，
         // 而 PlayerModelScreen#handleToggleKey 会对匹配的 Y 键执行 onClose() —— 导致界面"打开即关闭"。
-        if (this.minecraft.gui.screen() != before) {
+        if (this.minecraft.screen != before) {
             ci.cancel();
         }
     }

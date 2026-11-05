@@ -68,13 +68,9 @@ public final class GeoBufferSource {
      * 回放走 11 参批量 addVertex，语义与逐 setter 写入等价（见类注释的 javap 实证）。
      */
     private static boolean isEntityVertexFormat(com.mojang.blaze3d.vertex.VertexFormat format) {
-        return format.getElements().size() == 6
-                && format.contains(DefaultVertexFormat.POSITION_SEMANTIC_NAME)
-                && format.contains(DefaultVertexFormat.COLOR_SEMANTIC_NAME)
-                && format.contains(DefaultVertexFormat.UV0_SEMANTIC_NAME)
-                && format.contains(DefaultVertexFormat.UV1_SEMANTIC_NAME)
-                && format.contains(DefaultVertexFormat.UV2_SEMANTIC_NAME)
-                && format.contains(DefaultVertexFormat.NORMAL_SEMANTIC_NAME);
+        // 26.1.2 没有 *_SEMANTIC_NAME 常量，直接按格式等价判定
+        // （vanilla 实体格式就是 POSITION/COLOR/UV0/UV1/UV2/NORMAL 六元素）。
+        return DefaultVertexFormat.ENTITY.equals(format);
     }
 
     public void flush(SubmitNodeCollector collector, PoseStack poseStack) {

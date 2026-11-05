@@ -3,7 +3,6 @@ package com.elfmcys.yesstevemodel.mixin.client;
 import com.elfmcys.yesstevemodel.client.renderer.pip.YsmPreviewRendererPool;
 import com.elfmcys.yesstevemodel.client.renderer.pip.YsmPreviewRenderState;
 import net.minecraft.client.gui.render.GuiRenderer;
-import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
 import net.minecraft.client.renderer.state.gui.GuiRenderState;
 import net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState;
 import org.spongepowered.asm.mixin.Final;
@@ -36,17 +35,13 @@ public abstract class GuiRendererPreviewMixin {
     @Final
     private GuiRenderState renderState;
 
-    @Shadow
-    @Final
-    private FeatureRenderDispatcher featureRenderDispatcher;
-
     @Inject(
             method = "preparePictureInPictureState(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;I)V",
             at = @At("HEAD"),
             cancellable = true)
     private void ysm$prepareYsmPreview(PictureInPictureRenderState state, int guiScale, CallbackInfo ci) {
         if (state instanceof YsmPreviewRenderState preview) {
-            YsmPreviewRendererPool.prepare(preview, this.renderState, this.featureRenderDispatcher, guiScale);
+            YsmPreviewRendererPool.prepare(preview, this.renderState, guiScale);
             ci.cancel();
         }
     }

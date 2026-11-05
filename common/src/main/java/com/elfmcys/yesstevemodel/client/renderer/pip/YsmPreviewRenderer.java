@@ -5,7 +5,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.block.BlockModelResolver;
 import net.minecraft.client.renderer.block.model.BlockDisplayContext;
@@ -40,16 +42,16 @@ public class YsmPreviewRenderer extends PictureInPictureRenderer<YsmPreviewRende
     /** 本帧 GUI 缩放（{@link #prepare} 传入），用于把顶点包围盒从纹理像素换算回 GUI 像素。 */
     private int guiScale = 1;
 
-    public YsmPreviewRenderer(EntityRenderDispatcher entityRenderDispatcher) {
+    public YsmPreviewRenderer(MultiBufferSource.BufferSource bufferSource, EntityRenderDispatcher entityRenderDispatcher) {
+        // 26.1.2 的 PictureInPictureRenderer 仍持有 BufferSource（26.3 换成 FeatureRenderDispatcher 传参）
+        super(bufferSource);
         this.entityRenderDispatcher = entityRenderDispatcher;
     }
 
     @Override
-    public void prepare(YsmPreviewRenderState renderState, GuiRenderState guiRenderState,
-                        net.minecraft.client.renderer.feature.FeatureRenderDispatcher featureRenderDispatcher,
-                        int guiScale) {
+    public void prepare(YsmPreviewRenderState renderState, GuiRenderState guiRenderState, int guiScale) {
         this.guiScale = Math.max(1, guiScale);
-        super.prepare(renderState, guiRenderState, featureRenderDispatcher, guiScale);
+        super.prepare(renderState, guiRenderState, guiScale);
     }
 
     public boolean usedOnThisFrame() {
@@ -66,9 +68,12 @@ public class YsmPreviewRenderer extends PictureInPictureRenderer<YsmPreviewRende
     }
 
     @Override
-    protected void renderToTexture(YsmPreviewRenderState renderState, PoseStack poseStack,
-                                   SubmitNodeCollector submitNodeCollector) {
-        Minecraft.getInstance().gameRenderer.lighting().setupFor(Lighting.Entry.ENTITY_IN_UI);
+    protected void renderToTexture(YsmPreviewRenderState renderState, PoseStack poseStack) {
+        Minecraft minecraft = Minecraft.getInstance();
+        minecraft.gameRenderer.getLighting().setupFor(Lighting.Entry.ENTITY_IN_UI);
+        // 26.1.2：PiP 内部自己取 FeatureRenderDispatcher 提交（26.3 是由 prepare 传入 collector）。
+        FeatureRenderDispatcher featureRenderDispatcher = minecraft.gameRenderer.getFeatureRenderDispatcher();
+        SubmitNodeCollector submitNodeCollector = featureRenderDispatcher.getSubmitNodeStorage();
         Quaternionfc overriddenCameraAngle = renderState.overrideCameraAngle();
         CameraRenderState cameraRenderState = new CameraRenderState();
         if (overriddenCameraAngle != null) {
@@ -100,6 +105,7 @@ public class YsmPreviewRenderer extends PictureInPictureRenderer<YsmPreviewRende
         } finally {
             PipPreviewBounds.endCapture();
         }
+        featureRenderDispatcher.renderAllFeatures();
     }
 
     /**

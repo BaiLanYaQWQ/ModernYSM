@@ -252,7 +252,7 @@ public abstract class GeoReplacedEntityRenderer<TEntity extends LivingEntity, T 
     public boolean shouldShowName(TEntity entity) {
         // 26.3 port: 原 Minecraft.renderNames() 已删除，等价判断为 !hud.isHidden()（参照 vanilla shouldShowName）。
         double d = entity.isDiscrete() ? 32.0d : 64.0d;
-        return this.entityRenderDispatcher.distanceToSqr(entity) < d * d && entity == this.entityRenderDispatcher.crosshairPickEntity && entity.hasCustomName() && !Minecraft.getInstance().gui.hud.isHidden();
+        return this.entityRenderDispatcher.distanceToSqr(entity) < d * d && entity == this.entityRenderDispatcher.crosshairPickEntity && entity.hasCustomName() && !Minecraft.getInstance().options.hideGui;
     }
 
     public final boolean addLayerRenderer(GeoLayerRenderer<T> layerRenderer) {

@@ -13,7 +13,7 @@ public class ExtraPlayerOverlay implements HudRenderer {
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer localPlayer = minecraft.player;
-        if (ExtraPlayerRenderConfig.DISABLE_PLAYER_RENDER.get() || localPlayer == null || (minecraft.gui.screen() instanceof ExtraPlayerRenderScreen)) {
+        if (ExtraPlayerRenderConfig.DISABLE_PLAYER_RENDER.get() || localPlayer == null || (minecraft.screen instanceof ExtraPlayerRenderScreen)) {
             return;
         }
         if (ExtraPlayerRenderConfig.DISABLE_PLAYER_RENDER_THIRD_PERSON.get() && minecraft.options != null && !minecraft.options.getCameraType().isFirstPerson()) {

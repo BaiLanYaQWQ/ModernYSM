@@ -22,6 +22,6 @@ side="BOTH"
 [[dependencies.yes_steve_model]]
 modId="minecraft"
 mandatory=true
-versionRange="[26.2,26.3)"
+versionRange="[26.1.2,26.2)"
 ordering="NONE"
 side="BOTH"

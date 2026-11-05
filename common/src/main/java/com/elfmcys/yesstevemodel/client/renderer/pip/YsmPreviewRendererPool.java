@@ -1,10 +1,11 @@
 package com.elfmcys.yesstevemodel.client.renderer.pip;
 
+import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.state.gui.GuiRenderState;
 
 /**
@@ -25,14 +26,23 @@ public final class YsmPreviewRendererPool {
     private YsmPreviewRendererPool() {
     }
 
-    public static void prepare(YsmPreviewRenderState renderState, GuiRenderState guiRenderState,
-                               FeatureRenderDispatcher featureRenderDispatcher, int guiScale) {
+    /** 26.1.2 的 PictureInPictureRenderer 在构造期接收 BufferSource，所有预览实例共享一个。 */
+    private static MultiBufferSource.BufferSource sharedBufferSource;
+
+    private static MultiBufferSource.BufferSource sharedBufferSource() {
+        if (sharedBufferSource == null) {
+            sharedBufferSource = MultiBufferSource.immediate(new ByteBufferBuilder(1536));
+        }
+        return sharedBufferSource;
+    }
+
+    public static void prepare(YsmPreviewRenderState renderState, GuiRenderState guiRenderState, int guiScale) {
         YsmPreviewRenderer renderer = RENDERERS.get(renderState.key());
         if (renderer == null) {
-            renderer = new YsmPreviewRenderer(Minecraft.getInstance().getEntityRenderDispatcher());
+            renderer = new YsmPreviewRenderer(sharedBufferSource(), Minecraft.getInstance().getEntityRenderDispatcher());
             RENDERERS.put(renderState.key(), renderer);
         }
-        renderer.prepare(renderState, guiRenderState, featureRenderDispatcher, guiScale);
+        renderer.prepare(renderState, guiRenderState, guiScale);
     }
 
     /**

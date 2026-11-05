@@ -6,7 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.elfmcys.yesstevemodel.resource.YSMFolderDeserializer;
 import rip.ysm.imagestream.avif.AvifDecoder;
 import rip.ysm.imagestream.webp.WebpDecoder;
-import com.mojang.blaze3d.GpuFormat;
+import com.mojang.blaze3d.textures.TextureFormat;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceMaps;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import net.minecraft.client.Minecraft;
@@ -68,7 +68,7 @@ public class OuterFileTexture extends AbstractTexture implements ITextureMap {
             }
             var device = RenderSystem.getDevice();
             String label = "OuterFileTexture";
-            this.texture = device.createTexture(label, GpuTexture.USAGE_TEXTURE_BINDING | GpuTexture.USAGE_COPY_DST, GpuFormat.RGBA8_UNORM,
+            this.texture = device.createTexture(label, GpuTexture.USAGE_TEXTURE_BINDING | GpuTexture.USAGE_COPY_DST, TextureFormat.RGBA8,
                     imageIn.getWidth(), imageIn.getHeight(), 1, 1);
             this.sampler = RenderSystem.getSamplerCache().getRepeat(com.mojang.blaze3d.textures.FilterMode.NEAREST);
             this.textureView = device.createTextureView(this.texture);
