@@ -3,9 +3,15 @@ name: Build
 # 本仓库只保留 fabric + neoforge 两个加载器（forge 模块已移除）。
 # 三个向下移植分支共用一个流程：当前分支的 gradle.properties 决定 Minecraft 版本，
 # wrapper 决定 Gradle 版本（26.x 系列为 9.7.1），JDK 统一 25。
+#
+# 触发方式：
+#   - push / PR 到三个 port 分支  → 只构建并上传 Artifacts
+#   - push 形如 v* 的 tag         → 构建 + 发 GitHub Release（附带两个 jar）
+#   - 手动 workflow_dispatch     → 只构建并上传 Artifacts
 on:
   push:
     branches: ['port/26.3', 'port/26.2', 'port/26.1.2']
+    tags: ['v*']
     paths-ignore: &meta-only
       - '**.md'
       - 'LICENSE'
@@ -17,7 +23,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # 发 Release 需要写权限；Artifacts 上传不需要
+  contents: write
 
 # 同一分支/PR 的旧运行会被新推送取消，避免堆积
 concurrency:
@@ -71,3 +78,30 @@ jobs:
             neoforge/build/libs/openysm-*.jar
             !**/*-sources.jar
           if-no-files-found: error
+
+      # 只有 tag 推送才发 Release。两个加载器的 jar 同名，先各复制成
+      # openysm-<版本>-fabric.jar / -neoforge.jar 再上传。
+      - name: Stage release jars
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          mkdir -p release
+          for loader in fabric neoforge; do
+            jar=$(ls $loader/build/libs/openysm-*.jar | grep -v -- '-sources' | head -1)
+            cp "$jar" "release/$(basename "$jar" .jar)-$loader.jar"
+          done
+          ls -l release
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*.jar
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          body: |
+            自动构建产物（${{ github.ref_name }}）。
+
+            - `openysm-*-fabric.jar` — Fabric 版
+            - `openysm-*-neoforge.jar` — NeoForge 版
+
+            需要 JDK 25 运行环境（Minecraft 26.x 系列）。
